@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { useTransactionStore } from '@/stores/useTransactionStore'
 import Swal from 'sweetalert2'
+import router from '@/router'
 
 const store = useTransactionStore()
 
@@ -39,7 +40,7 @@ function handleSubmit() {
   timer: 3000,
   timerProgressBar: true,
   customClass: {
-    timerProgressBar: 'myProgessbarSus',
+    timerProgressBar: 'myProgessbarErr',
   }
 })
 
@@ -53,12 +54,13 @@ function handleSubmit() {
   icon: 'success',
   title: 'Transaction ajoutée avec succès !',
   showConfirmButton: false,
-  timer: 3000,
+  timer: 2000,
   timerProgressBar: true,
   customClass: {
     timerProgressBar: 'myProgessbarSus',
   }
 })
+
 
 
   // Reset form
@@ -69,6 +71,8 @@ function handleSubmit() {
     date: '',
     note: '',
   }
+
+  router.push('/')
 }
 </script>
 
@@ -77,7 +81,7 @@ function handleSubmit() {
     class="max-w-2xl mx-auto mt-16 bg-white shadow-xl rounded-3xl p-8 sm:p-10 border border-gray-100 transition-all"
   >
     <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-800 mb-6">
-      💼 Ajouter une transaction
+      Ajouter une transaction
     </h2>
 
     <form @submit.prevent="handleSubmit" class="space-y-6">
@@ -150,11 +154,9 @@ function handleSubmit() {
           type="submit"
           class=" bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white p-2 rounded-xl font-semibold shadow-md text-sm sm:text-base transition-all"
         >
-          ➕ Ajouter la transaction
+          Ajouter la transaction
         </button>
-        <RouterLink to="/">
-                  <button class="cursor-pointer rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-center font-semibold shadow-md w-full my-4 text-background p-2">Voir vos transactions</button>
-    </RouterLink>
+
       </div>
     </form>
 

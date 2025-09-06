@@ -212,7 +212,7 @@ setTimeout(() => {
         v-model="name"
         type="text"
         :class=" [errorName ? 'border-red-500': (name  && !errorName ? 'border-green-500': '')]"
-        class="pl-7 focus:ring-0 text-micro border-2 border-blue-600 p-3 rounded-md"
+        class="pl-7 focus:ring-0 text-micro border-2 bg-gray-200 border-blue-600 p-3 rounded-md"
       />
       <i class="fas fa-envelope absolute bottom-4 left-2"></i>
     </div>
@@ -224,7 +224,7 @@ setTimeout(() => {
         v-model="email"
         type="email"
         :class=" [errorEmail ? 'border-red-500': (email  && !errorEmail ? 'border-green-500': '')]"
-        class="pl-7 focus:ring-0 text-micro border-2 border-blue-600 p-3 rounded-md"
+        class="pl-7 focus:ring-0 text-micro border-2 bg-gray-200 border-blue-600 p-3 rounded-md"
       />
       <i class="fas fa-envelope absolute bottom-4 left-2"></i>
     </div>
@@ -235,7 +235,7 @@ setTimeout(() => {
         v-model="password"
         :class="[errorPassword ? 'border-red-500': (password  && !errorPassword ? 'border-green-500': '')]"
         :type="isPassword ? 'text' : 'password'"
-        class="pl-7 focus:ring-0 text-micro border-2 border-blue-600 p-3 rounded-md"
+        class="pl-7 focus:ring-0 text-micro border-2 bg-gray-200 border-blue-600 p-3 rounded-md"
       />
       <i class="fas fa-lock absolute bottom-4 left-2"></i>
       <i
@@ -243,6 +243,29 @@ setTimeout(() => {
         class="absolute bottom-4 cursor-pointer right-2"
         @click="togglePassword"
       ></i>
+      <!-- Bloc de critères stylés pour le mot de passe -->
+      <ul v-if="password" class="mt-2 text-xs rounded-lg bg-red-50 p-3 border border-red-200 shadow space-y-1">
+        <li :class="{'text-green-600': /[A-Z]/.test(password), 'text-red-500': !/[A-Z]/.test(password)}">
+          <i :class="{'fas fa-check-circle': /[A-Z]/.test(password), 'fas fa-times-circle': !/[A-Z]/.test(password)}"></i>
+          Au moins une lettre majuscule
+        </li>
+        <li :class="{'text-green-600': /[a-z]/.test(password), 'text-red-500': !/[a-z]/.test(password)}">
+          <i :class="{'fas fa-check-circle': /[a-z]/.test(password), 'fas fa-times-circle': !/[a-z]/.test(password)}"></i>
+          Au moins une lettre minuscule
+        </li>
+        <li :class="{'text-green-600': /\d/.test(password), 'text-red-500': !/\d/.test(password)}">
+          <i :class="{'fas fa-check-circle': /\d/.test(password), 'fas fa-times-circle': !/\d/.test(password)}"></i>
+          Au moins un chiffre
+        </li>
+        <li :class="{'text-green-600': /[@$!#%^&*?]/.test(password), 'text-red-500': !/[@$!#%^&*?]/.test(password)}">
+          <i :class="{'fas fa-check-circle': /[@$!#%^&*?]/.test(password), 'fas fa-times-circle': !/[@$!#%^&*?]/.test(password)}"></i>
+          Au moins un symbole (@$!#%^&*?)
+        </li>
+        <li :class="{'text-green-600': password.length >= 8, 'text-red-500': password.length < 8}">
+          <i :class="{'fas fa-check-circle': password.length >= 8, 'fas fa-times-circle': password.length < 8}"></i>
+          Minimum 8 caractères
+        </li>
+      </ul>
     </div>
     <p v-if="errorPassword" class="text-danger text-small mb-3">{{ errorPassword }}</p>
 
@@ -252,7 +275,7 @@ setTimeout(() => {
         v-model="Conpassword"
         :class="[errorConPassword ? 'border-red-500': (Conpassword  && !errorConPassword ? 'border-green-500': '')]"
         :type="isConPassword ? 'text' : 'password'"
-        class="pl-7 focus:ring-0 text-micro border-2 border-blue-600 p-3 rounded-md"
+        class="pl-7 focus:ring-0 text-micro border-2 bg-gray-200 border-blue-600 p-3 rounded-md"
       />
       <i class="fas fa-lock absolute bottom-4 left-2"></i>
       <i

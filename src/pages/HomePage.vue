@@ -52,24 +52,25 @@
     <h1 class="text-4xl font-bold text-gray-900 tracking-tight">📋 Transactions</h1>
 
     <!-- 🎛️ Filtres -->
-    <div class="bg-white p-6 rounded-3xl shadow-xl ring-1 ring-gray-100 space-y-4">
+    <div class="bg-white p-6 rounded-3xl  space-y-4">
+      <!-- Filtres avec option par défaut -->
       <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 text-sm sm:text-base">
         <!-- Type -->
         <select v-model="filters.type" class="filter-select">
-          <option value="">Tous les types</option>
+          <option value="" selected>Tous les types</option>
           <option value="Revenu">Revenu</option>
           <option value="Dépense">Dépense</option>
         </select>
 
         <!-- Catégorie -->
         <select v-model="filters.category" class="filter-select">
-          <option value="">Toutes les catégories</option>
-          <option v-for="cat in allCategories" :key="cat">{{ cat }}</option>
+          <option value="" selected>Toutes les catégories</option>
+          <option v-for="cat in allCategories" :key="cat" :value="cat">{{ cat }}</option>
         </select>
 
         <!-- Période -->
         <select v-model="filters.period" class="filter-select">
-          <option value="">Toutes les périodes</option>
+          <option value="" selected>Toutes les périodes</option>
           <option value="today">Aujourd’hui</option>
           <option value="week">Cette semaine</option>
           <option value="month">Ce mois</option>
@@ -77,7 +78,7 @@
 
         <!-- Tri -->
         <select v-model="filters.sortBy" class="filter-select">
-          <option value="date">Trier par date</option>
+          <option value="date" selected>Trier par date</option>
           <option value="amount">Trier par montant</option>
         </select>
       </div>
@@ -88,7 +89,7 @@
           @click="filterStore.resetFilters"
           class="inline-flex items-center gap-2 cursor-pointer bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition"
         >
-          🔄 Réinitialiser les filtres
+          Réinitialiser les filtres
         </button>
         <RouterLink to="/transaction">
                   <button class="inline-flex items-center cursor-pointer gap-2 ml-4 bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition"> <i class="fas fa-plus text-primary"></i> Ajoutez de nouvelles transactions</button>
@@ -102,29 +103,31 @@
     </div>
 
     <!-- 📦 Transactions -->
-    <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
     <div
-    :class="[t.type === 'Dépense' ? 'border-l-4 border-danger hover:shadow-red-400 shadow-sm ' : 'border-l-4 border-success hover:shadow-green-400 shadow-sm']"
-      v-for="t in filteredTransactions"
-      :key="t.id"
-      class="bg-text  relative shadow-md p-6 rounded-xl  flex justify-between items-center"
-    >
-      <div>
-        <h3 class="text-lg font-bold">{{ t.title }}</h3>
-        <p class="text-sm text-background py-2">
-          {{ t.category }} • {{ t.type }} • {{ t.amount }} FCFA
-        </p>
+    v-for="t in filteredTransactions"
+    :key="t.id"
+    :class="[
 
-        <p class="text-sm text-background py-2">
-          {{  t.note  }}
+      'relative  p-6 rounded-2xl flex flex-col justify-between items-start transition-all duration-300',
+      t.type === 'Dépense' ? 'border-l-4 border-danger' : 'border-l-4 border-success'
+    ]"
+      class="bg-white relative p-6 rounded-xl  flex justify-between items-center"
+    >
+      <div class="w-full">
+        <h3 class="text-lg font-bold mb-2 text-blue-900 flex items-center gap-2">
+          <i :class="t.type === 'Dépense' ? 'fas fa-arrow-down text-danger' : 'fas fa-arrow-up text-success'"></i>
+          {{ t.title }}
+        </h3>
+        <p class="text-sm text-blue-700 py-1 font-semibold">
+          {{ t.category }} • {{ t.type }} • <span class="font-bold">{{ t.amount }} FCFA</span>
         </p>
-        <p class="text-xs text-gray-400 py-2">
-          {{ new Date(t.date).toLocaleDateString() }}
-        </p>
+        <p class="text-xs text-blue-500 py-1 italic">{{ t.note }}</p>
+        <p class="text-xs text-gray-400 py-1">{{ new Date(t.date).toLocaleDateString() }}</p>
       </div>
       <button
         @click="confirmDelete(t.id)"
-        class="text-red-500 hover:text-red-700 absolute top-7 right-2 transition text-xl"
+        class="text-red-500 hover:text-red-700 absolute top-4 right-4 transition text-xl bg-white rounded-full p-2 shadow"
         title="Supprimer"
       >
         <i class="fas fa-trash"></i>

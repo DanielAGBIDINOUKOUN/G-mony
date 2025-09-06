@@ -1,6 +1,6 @@
 <template>
   <div class="p-6 max-w-6xl mx-auto space-y-10 mt-20">
-    <h1 class="text-3xl font-bold">📊 Dashboard financier</h1>
+    <h1 class="text-3xl font-bold">Dashboard financier</h1>
 
     <!-- Résumé financier -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
